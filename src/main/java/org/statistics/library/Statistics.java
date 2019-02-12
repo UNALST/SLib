@@ -48,7 +48,7 @@ public class Statistics<K> {
 				for (int i = index; i < unboxedValue; ++i) {
 					this.indexes.get(this.statistics.get(i).getKey()).add(1);
 				}
-			} else if (unboxedValue < index) {
+			} else {
 				if (unboxedValue == index - 1) {
 					return;
 				}
@@ -100,11 +100,11 @@ public class Statistics<K> {
 	}
 	
 	public List<K> getKeys(boolean parallel) {
-		return (parallel ? this.statistics.parallelStream() : this.statistics.stream()).map(entry -> entry.getKey()).collect(Collectors.toList());
+		return (parallel ? this.statistics.parallelStream() : this.statistics.stream()).map(Statistic::getKey).collect(Collectors.toList());
 	}
 	
 	public List<Integer> values(boolean parallel) {
-		return (parallel ? this.statistics.parallelStream() : this.statistics.stream()).map(entry -> entry.getValue()).collect(Collectors.toList());
+		return (parallel ? this.statistics.parallelStream() : this.statistics.stream()).map(Statistic::getValue).collect(Collectors.toList());
 	}
 	
 	public List<Statistic<K>> getStatistics() {
